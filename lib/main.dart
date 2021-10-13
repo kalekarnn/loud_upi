@@ -62,7 +62,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _message = "Rs.0";
+  String _message = "";
   final telephony = Telephony.instance;
   late FlutterTts flutterTts;
   String? language;
@@ -71,6 +71,7 @@ class _MyAppState extends State<MyApp> {
   double pitch = 1.0;
   double rate = 0.4;
   bool get isAndroid => !kIsWeb && Platform.isAndroid;
+  String amountMsg = "Rs.0";
 
   @override
   void initState() {
@@ -115,8 +116,7 @@ class _MyAppState extends State<MyApp> {
 
   onMessage(SmsMessage message) async {
     setState(() {
-      _message = message.body ?? "Error reading message body.";
-      var parsedMsg = _message;
+      var parsedMsg = message.body ?? "Error reading message body.";;
       var credited = parsedMsg.toLowerCase().contains("credited");
 
       RegExp regExp = new RegExp(
@@ -129,8 +129,8 @@ class _MyAppState extends State<MyApp> {
         var match = regExp.firstMatch(parsedMsg);
         var extractedMsg = match?.group(0).toString();
         if (extractedMsg != null) {
-          _message = extractedMsg;
-          _speak(_message);
+          amountMsg = extractedMsg;
+          _speak(amountMsg);
         }
       }
     });
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
   onBackgroundMessage(SmsMessage message) {
     debugPrint("onBackgroundMessage called");
     _message = message.body ?? "Error reading message body.";
-    var parsedMsg = _message; //todo
+    var parsedMsg = _message;
     _speak(parsedMsg);
   }
 
@@ -175,7 +175,7 @@ class _MyAppState extends State<MyApp> {
                   ))),
           Spacer(),
           Center(
-              child: Text("$_message",
+              child: Text("$amountMsg",
                   style: TextStyle(
                     fontSize: 35,
                     color: Colors.blue,
