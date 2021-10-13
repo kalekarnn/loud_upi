@@ -173,11 +173,10 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.blue,
                     fontWeight: FontWeight.w700,
                   ))),
-          Spacer(),
           Center(
               child: Text("$amountMsg",
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 40,
                     color: Colors.blue,
                     fontWeight: FontWeight.w700,
                   ))),
